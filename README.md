@@ -1,5 +1,3 @@
-Quiz_app
+QUIZ_APP
 
-
-data - questions and answers
-app - main app
+Simple python quiz app
