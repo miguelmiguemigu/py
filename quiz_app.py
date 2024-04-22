@@ -8,18 +8,24 @@ class QuizApp:
         self.user_answers = []
         master.title("Python Quiz")
         
-        ttk.Style().theme_use('vista')
+        style = ttk.Style()
+
+        
+        if 'vista' in style.theme_names():
+            style.theme_use('vista')
+        else:
+            style.theme_use('default')
 
         self.welcome_screen = ttk.Frame(master)
-        self.welcome_label = ttk.Label(self.welcome_screen, text="Welcome to the Python Quiz!", font=("Arial", 18))
+        self.welcome_label = ttk.Label(self.welcome_screen, text="Vitajte v tomto kvíze!", font=("Arial", 18))
         self.welcome_label.pack(pady=20)
 
         self.name_entry = ttk.Entry(self.welcome_screen, width=20)
-        self.name_label = ttk.Label(self.welcome_screen, text="Enter your name (optional):")
+        self.name_label = ttk.Label(self.welcome_screen, text="Zadajte svoje meno:")
         self.name_label.pack()
         self.name_entry.pack(pady=10)
 
-        self.start_button = ttk.Button(self.welcome_screen, text="Start Quiz", command=self.show_quiz_screen)
+        self.start_button = ttk.Button(self.welcome_screen, text="Začať", command=self.show_quiz_screen)
         self.start_button.pack()
         self.welcome_screen.pack()
         
@@ -44,10 +50,10 @@ class QuizApp:
         self.progress_bar = ttk.Progressbar(self.quiz_screen, orient="horizontal", mode="determinate", maximum=len(questions))
         self.progress_bar.pack()
 
-        self.next_button = ttk.Button(self.quiz_screen, text="Next Question", state="disabled", command=self.next_question)
+        self.next_button = ttk.Button(self.quiz_screen, text="Ďaľšia otázka", state="disabled", command=self.next_question)
         self.next_button.pack()
 
-        self.submit_button = ttk.Button(self.quiz_screen, text="Submit Quiz", state="disabled", command=self.show_results)
+        self.submit_button = ttk.Button(self.quiz_screen, text="Ukončit", state="disabled", command=self.show_results)
         self.submit_button.pack()
 
         self.current_question = 0
