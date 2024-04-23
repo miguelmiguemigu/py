@@ -40,7 +40,6 @@ class QuizApp:
         self.start_button = ttk.Button(self.welcome_screen, text="Začať", command=self.show_quiz_screen)
         self.start_button.place(relx=0.5, rely=0.6, anchor="center")
         self.welcome_screen.pack()
-
         self.quiz_screen = TransparentCanvas(master, width=800, height=600, alpha=0.7)
         self.quiz_screen.pack_forget()
 
