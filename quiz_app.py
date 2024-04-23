@@ -9,7 +9,7 @@ from datetime import datetime
 class TransparentCanvas(tk.Canvas):
     def __init__(self, master, alpha=0.5, **kwargs):
         super().__init__(master, **kwargs)
-        self.itemconfig(self.create_rectangle(0, 0, self.winfo_width(), self.winfo_height(), fill='white', outline='white'), stipple='gray50')
+        self.itemconfig(self.create_rectangle(0, 0, self.winfo_width(), self.winfo_height(), fill='white', outline='white'), stipple='gray12')
         self.alpha = alpha
         self.bind('<Configure>', self._on_configure)
 
@@ -32,7 +32,7 @@ class QuizApp:
         self.name_entry = ttk.Entry(self.welcome_screen, width=20)
         self.name_entry.place(relx=0.5, rely=0.35, anchor="center")
 
-        self.num_questions_label = ttk.Label(self.welcome_screen, text="Enter number of questions:", font=("Arial", 16))
+        self.num_questions_label = ttk.Label(self.welcome_screen, text="Zadajte počet otázok:", font=("Arial", 16))
         self.num_questions_label.place(relx=0.5, rely=0.45, anchor="center")
         self.num_questions_entry = ttk.Entry(self.welcome_screen, width=20)
         self.num_questions_entry.place(relx=0.5, rely=0.5, anchor="center")
@@ -76,6 +76,7 @@ class QuizApp:
         with open(f"./user_answers_{timestamp}.txt", "w") as file:
             for answer in self.user_answers:
                 file.write(f"{answer}\n")
+            file.write(f"\nScore: {self.score} z {len(self.questions)}\n")
 
     def show_end_screen(self):
         self.quiz_screen.pack_forget()
@@ -83,12 +84,12 @@ class QuizApp:
         self.end_screen = tk.Frame(self.master)
         self.end_screen.pack()
 
-        tk.Label(self.end_screen, text=f"Quiz finished! Your score is {self.score}.", font=("Arial", 24)).pack()
-        tk.Label(self.end_screen, text="Thank you for playing!", font=("Arial", 24)).pack()
+        tk.Label(self.end_screen, text=f"Koniec! Tvoje skóre je {self.score}.", font=("Arial", 24)).pack()
+        tk.Label(self.end_screen, text="Ďakujeme za hranie!", font=("Arial", 24)).pack()
 
         self.save_answers()
 
-        self.restart_button = ttk.Button(self.end_screen, text="Restart Quiz", command=self.restart_quiz)
+        self.restart_button = ttk.Button(self.end_screen, text="Začať znova", command=self.restart_quiz)
 
     def restart_quiz(self):
         self.end_screen.pack_forget()
@@ -123,7 +124,7 @@ class QuizApp:
         if num_questions.isdigit() and int(num_questions) > 0 and int(num_questions) <= len(questions):
             num_questions = int(num_questions)
         else:
-            messagebox.showerror("Error", "Please enter a valid number of questions.")
+            messagebox.showerror("Chyba", "Pocet otazok musi byt vacsi ako 0 a mensi ako pocet otazok v databaze.")
             return
 
         self.welcome_screen.pack_forget()
@@ -165,6 +166,8 @@ class QuizApp:
 
         self.feedback_label.grid(row=7, column=0, pady=10)
         self.progress_bar.grid(row=10, column=0, pady=10)
+
+    
 
     def show_results(self):
     
