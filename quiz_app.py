@@ -150,9 +150,9 @@ class QuizApp:
         
         if selected_answer_text == self.questions[self.current_question]["correct"]:
             self.score += 1
-            self.feedback_label.config(text="Correct!", foreground="green")
+            self.feedback_label.config(text="Správne!", foreground="green")
         else:
-            self.feedback_label.config(text="Incorrect.", foreground="red")
+            self.feedback_label.config(text="Nesprávne!", foreground="red")
 
         for button in self.answer_buttons:
             button.config(state="disabled")

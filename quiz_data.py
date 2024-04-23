@@ -1,10 +1,5 @@
 questions = [
     {
-        "question": "Aký je hlavný mesto Slovenska?",
-        "options": ["Paris", "London", "Berlin", "Bratislava"],
-        "correct": "Bratislava"
-    },
-    {
         "question": "Aké je hlavné mesto Anglicka?",
         "options": ["Paríž", "Londýn", "Berlín", "Madrid"],
         "correct": "Londýn"
