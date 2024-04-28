@@ -24,7 +24,7 @@ class QuizApp:
         self.questions = random.sample(questions, 10)
         self.welcome_screen = TransparentCanvas(master, width=800, height=600, alpha=0.7)
 
-        self.welcome_label = ttk.Label(self.welcome_screen, text="Welcome to the Quiz!", font=("Arial", 24))
+        self.welcome_label = ttk.Label(self.welcome_screen, text="Vitajte v kvize!", font=("Arial", 24))
         self.welcome_label.place(relx=0.5, rely=0.1, anchor="center")
 
         self.name_label = ttk.Label(self.welcome_screen, text="Zadajte svoje meno:", font=("Arial", 16))
@@ -73,6 +73,7 @@ class QuizApp:
     def save_answers(self):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         with open(f"./user_answers_{timestamp}.txt", "w") as file:
+            file.write(f"Meno: {self.user_name}\n\n")
             for answer in self.user_answers:
                 file.write(f"{answer}\n")
             file.write(f"\nScore: {self.score} z {len(self.questions)}\n")
@@ -93,9 +94,9 @@ class QuizApp:
     def restart_quiz(self):
         self.end_screen.pack_forget()
         self.current_question = 0
-        self.score = 0
+        self.score = 0  # Fix: Replace "save" with the initial value of the score variable
         self.user_answers = []
-        self.qestions = random.sample(questions, 10)
+        self.questions = random.sample(questions, 10)  # Fix: Correct the typo in the variable name
         self.welcome_screen.pack()
 
 
@@ -125,6 +126,8 @@ class QuizApp:
         else:
             messagebox.showerror("Chyba", "Pocet otazok musi byt vacsi ako 0 a mensi ako pocet otazok v databaze.")
             return
+        
+        self.user_name = self.name_entry.get()
 
         self.welcome_screen.pack_forget()
         self.quiz_screen.pack()
@@ -134,7 +137,7 @@ class QuizApp:
 
     def display_question(self):
         
-        question = questions[self.current_question]
+        question = self.questions[self.current_question]
 
         self.question_label.config(text=question["question"])
         for i in range(4):
