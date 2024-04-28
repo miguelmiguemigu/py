@@ -24,7 +24,7 @@ class QuizApp:
         self.questions = random.sample(questions, 10)
         self.welcome_screen = TransparentCanvas(master, width=800, height=600, alpha=0.7)
 
-        self.welcome_label = ttk.Label(self.welcome_screen, text="Vitajte v kvize!", font=("Arial", 24))
+        self.welcome_label = ttk.Label(self.welcome_screen, text="Vitajte v kvíze!", font=("Arial", 24))
         self.welcome_label.place(relx=0.5, rely=0.1, anchor="center")
 
         self.name_label = ttk.Label(self.welcome_screen, text="Zadajte svoje meno:", font=("Arial", 16))
@@ -32,7 +32,7 @@ class QuizApp:
         self.name_entry = ttk.Entry(self.welcome_screen, width=20)
         self.name_entry.place(relx=0.5, rely=0.35, anchor="center")
 
-        self.num_questions_label = ttk.Label(self.welcome_screen, text="Zadajte počet otázok:", font=("Arial", 16))
+        self.num_questions_label = ttk.Label(self.welcome_screen, text=f"Zadajte počet otázok (max {len(questions)}):", font=("Arial", 16))
         self.num_questions_label.place(relx=0.5, rely=0.45, anchor="center")
         self.num_questions_entry = ttk.Entry(self.welcome_screen, width=20)
         self.num_questions_entry.place(relx=0.5, rely=0.5, anchor="center")
@@ -76,7 +76,7 @@ class QuizApp:
             file.write(f"Meno: {self.user_name}\n\n")
             for answer in self.user_answers:
                 file.write(f"{answer}\n")
-            file.write(f"\nScore: {self.score} z {len(self.questions)}\n")
+            file.write(f"\nSkóre: {self.score} z {len(self.questions)}\n")
 
     def show_end_screen(self):
         self.quiz_screen.pack_forget()
@@ -84,19 +84,20 @@ class QuizApp:
         self.end_screen = tk.Frame(self.master)
         self.end_screen.pack()
 
-        tk.Label(self.end_screen, text=f"Koniec! Tvoje skóre je {self.score}.", font=("Arial", 24)).pack()
-        tk.Label(self.end_screen, text="Ďakujeme za hranie!", font=("Arial", 24)).pack()
+        tk.Label(self.end_screen, text=f"Koniec! Tvoje skóre je {self.score}.", font=("Arial", 24)).grid(row=0, column=0)
+        tk.Label(self.end_screen, text="Ďakujeme za hranie!", font=("Arial", 24)).grid(row=1, column=0)
 
         self.save_answers()
 
         self.restart_button = ttk.Button(self.end_screen, text="Začať znova", command=self.restart_quiz)
+        self.restart_button.grid(row=6, column=0)
 
     def restart_quiz(self):
         self.end_screen.pack_forget()
         self.current_question = 0
-        self.score = 0  # Fix: Replace "save" with the initial value of the score variable
+        self.score = 0
         self.user_answers = []
-        self.questions = random.sample(questions, 10)  # Fix: Correct the typo in the variable name
+        self.questions = random.sample(questions, 10)
         self.welcome_screen.pack()
 
 
@@ -110,10 +111,6 @@ class QuizApp:
                 self.answer_buttons[i].config(text=question["options"][i], state="normal")
             self.selected_answer.set("")
         else:
-            """ self.question_label.config(text=f"Quiz finished! Your score is {self.score}.")
-            for button in self.answer_buttons:
-                button.config(state="disabled")
-            self.next_button.config(state="disabled") """
             self.show_end_screen()
 
         self.feedback_label.config(text="")
@@ -178,7 +175,7 @@ class QuizApp:
         self.results_screen = ttk.Frame(self.master)
         self.results_screen.pack()
     
-        self.results_label = ttk.Label(self.results_screen, text=f"{self.user_name}, your score is {self.score} out of {len(questions)}!", font=("Arial", 18))
+        self.results_label = ttk.Label(self.results_screen, text=f"{self.user_name}, vaše skóre je {self.score} z {len(questions)}!", font=("Arial", 18))
         self.results_label.pack(pady=20)
 
         self.restart_button = ttk.Button(self.results_screen, text="Restart Quiz", command=self.restart_quiz)
@@ -188,6 +185,7 @@ class QuizApp:
 
 root = tk.Tk()
 root.geometry("800x600")
+root.title("Quiz_App")
 
 quiz_app = QuizApp(root)
 
