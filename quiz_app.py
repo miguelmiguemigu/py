@@ -16,7 +16,6 @@ class TransparentCanvas(tk.Canvas):
     def _on_configure(self, event):
         self.itemconfig(self.find_withtag(tk.CURRENT), stipple='gray%d' % int(255 * self.alpha))
 
-
 class QuizApp:
     def __init__(self, master):
         self.master = master
@@ -60,10 +59,8 @@ class QuizApp:
 
         self.progress_bar = ttk.Progressbar(self.quiz_screen, orient="horizontal", mode="determinate", maximum=len(questions))
         self.progress_bar.grid(row=10, column=0, pady=10)
-
         self.next_button = ttk.Button(self.quiz_screen, text="Ďaľšia otázka", state="disabled", command=self.next_question)
         self.next_button.grid(row=8, column=0, pady=10)
-
         self.submit_button = ttk.Button(self.quiz_screen, text="Ukončit", state="disabled", command=self.show_results)
         self.submit_button.grid(row=9, column=0, pady=10)
         self.current_question = 0
@@ -80,10 +77,8 @@ class QuizApp:
 
     def show_end_screen(self):
         self.quiz_screen.pack_forget()
-
         self.end_screen = tk.Frame(self.master)
         self.end_screen.pack()
-
         tk.Label(self.end_screen, text=f"Koniec! Tvoje skóre je {self.score}.", font=("Arial", 24)).grid(row=0, column=0)
         tk.Label(self.end_screen, text="Ďakujeme za hranie!", font=("Arial", 24)).grid(row=1, column=0)
 
@@ -99,7 +94,6 @@ class QuizApp:
         self.user_answers = []
         self.questions = random.sample(questions, 10)
         self.welcome_screen.pack()
-
 
     def next_question(self):    
         self.current_question += 1
@@ -142,7 +136,6 @@ class QuizApp:
             
             self.selected_answer.set("")
 
-
     def check_answer(self):
         selected_answer = self.selected_answer.get()
         selected_answer_text = self.questions[self.current_question]["options"][int(selected_answer[-1]) - 1]
@@ -166,18 +159,13 @@ class QuizApp:
         self.feedback_label.grid(row=7, column=0, pady=10)
         self.progress_bar.grid(row=10, column=0, pady=10)
 
-    
-
     def show_results(self):
     
         self.quiz_screen.pack_forget()
-        
         self.results_screen = ttk.Frame(self.master)
         self.results_screen.pack()
-    
         self.results_label = ttk.Label(self.results_screen, text=f"{self.user_name}, vaše skóre je {self.score} z {len(questions)}!", font=("Arial", 18))
         self.results_label.pack(pady=20)
-
         self.restart_button = ttk.Button(self.results_screen, text="Restart Quiz", command=self.restart_quiz)
         self.restart_button.pack()
 
