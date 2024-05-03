@@ -69,10 +69,11 @@ class QuizApp:
 
     def save_answers(self):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        with open(f"./user_answers_{timestamp}.txt", "w") as file:
+        with open(f"./user_answers_{timestamp}.txt", "w", encoding='utf-8') as file:
             file.write(f"Meno: {self.user_name}\n\n")
-            for answer in self.user_answers:
-                file.write(f"{answer}\n")
+            for i, answer in enumerate(self.user_answers):
+                file.write(f"Otázka: {self.questions[i]['question']}\n")
+                file.write(f"Odpoveď: {answer}\n\n")
             file.write(f"\nSkóre: {self.score} z {len(self.questions)}\n")
 
     def show_end_screen(self):
@@ -166,14 +167,14 @@ class QuizApp:
         self.results_screen.pack()
         self.results_label = ttk.Label(self.results_screen, text=f"{self.user_name}, vaše skóre je {self.score} z {len(questions)}!", font=("Arial", 18))
         self.results_label.pack(pady=20)
-        self.restart_button = ttk.Button(self.results_screen, text="Restart Quiz", command=self.restart_quiz)
+        self.restart_button = ttk.Button(self.results_screen, text="Reštartovať kvíz", command=self.restart_quiz)
         self.restart_button.pack()
 
         self.save_answers()
 
 root = tk.Tk()
 root.geometry("800x600")
-root.title("Quiz_App")
+root.title("Quizzy")
 
 quiz_app = QuizApp(root)
 
