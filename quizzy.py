@@ -1,3 +1,10 @@
+""" 
+Copyright (c) 2024 Michal Mečiar
+
+Táto práca je licencovaná pod licenciou MIT.
+
+Bližšie informácie nájdete na [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT).
+"""
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
